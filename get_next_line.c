@@ -13,42 +13,69 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 
-#define BUFFER_SIZE 0
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE 42
+#endif
 
 // Returns a read-line from a fd
 char	*get_next_line(int fd)
 {
-	return (0);
+	char	*buffer;
+	int		i;
+	ssize_t bytes_read;
+	
+	buffer = malloc(BUFFER_SIZE);
+	if (buffer == NULL)
+	{
+		printf("Failed to allocate memory");
+		return (NULL);
+	}
+	i = 0;
+	while (i < BUFFER_SIZE - 1)
+	{
+		bytes_read = read(fd, &buffer[i], 1);
+		if (bytes_read == -1)
+		{
+			printf("Error reading file");
+			free(buffer);
+			return (NULL);
+		}
+		else if (bytes_read == 0 || buffer[i] == '\n')
+		{
+			break ;
+		}
+		i++;
+	}
+	buffer[i] = '\0';
+	return (buffer);
 }
 
-int	main(void)
+int	main(int argc, char *argv[])
 {
 	int		fd;
-	size_t	i;
-	char	buffer[BUFFER_SIZE];
-	ssize_t	bytes_read;
-	int		found_newline = 0;
+	char	*first_line;
 
-	fd = open("file.ecz", O_RDONLY);
+	if (argc != 2)
+	{
+		printf("Error at args in main function");
+		return (0);
+	}
+
+	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 	{
-		perror("Error at opening.");
+		printf("Error opening file");
 		return (0);
 	}
 
-	bytes_read = read(fd, buffer, BUFFER_SIZE);
-	if (bytes_read == - 1)
+	first_line = get_next_line(fd);
+	if (first_line != NULL)
 	{
-		perror("Error at reading file.");
-		close(fd);
-		return (0);
+		printf("First line: %s\n", first_line);
+		free(first_line);
 	}
-
-	buffer[bytes_read] = '\0';
-
-	printf("%s", buffer);
-
 	close(fd);
-	return (0);
+	return (1);
 }
