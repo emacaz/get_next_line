@@ -16,15 +16,8 @@
 #include <stdlib.h>
 
 #ifndef BUFFER_SIZE
-#define BUFFER_SIZE 42
+# define BUFFER_SIZE	42
 #endif
-
-
-// allocate memory
-// Read the file
-// save the string into index of pointer
-// Save string '\0' -> *[string1][string2][stringn][NULL]
-// free memory
 
 // Returns a read-line from a fd
 char	*get_next_line(int fd)
@@ -60,20 +53,14 @@ int	main(int argc, char *argv[])
 		printf("Error at args in main function");
 		return (0);
 	}
-
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 	{
 		printf("Error opening file");
 		return (0);
 	}
-
-	first_line = get_next_line(fd);
-	if (first_line != NULL)
-	{
-		printf("First line: %s\n", first_line);
-		free(first_line);
-	}
+	printf("%s", first_line = get_next_line(fd));
+	free(first_line);
 	close(fd);
 	return (1);
 }
