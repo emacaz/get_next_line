@@ -36,48 +36,18 @@ char	*get_next_line(int fd)
 	database = malloc(BUFFER_SIZE);
 	if (!database)
 		return (NULL);
+	i = 0;
 	while (i < BUFFER_SIZE)
 	{
 		bytes_read = read(fd, &database[i], 1);
 		if (bytes_read == -1)
 			return (NULL);
 		else if (bytes_read == '\n')
-		// Save new word into databse...
-	}
-	
-
-
-
-
-
-	char	*buffer;
-	int		i;
-	ssize_t bytes_read;
-	
-	buffer = malloc(BUFFER_SIZE);
-	if (buffer == NULL)
-	{
-		printf("Failed to allocate memory");
-		return (NULL);
-	}
-	i = 0;
-	while (i < BUFFER_SIZE - 1)
-	{
-		bytes_read = read(fd, &buffer[i], 1);
-		if (bytes_read == -1)
-		{
-			printf("Error reading file");
-			free(buffer);
-			return (NULL);
-		}
-		else if (bytes_read == 0 || buffer[i] == '\n')
-		{
 			break ;
-		}
 		i++;
 	}
-	buffer[i] = '\0';
-	return (buffer);
+	database[i] = '\0';
+	return (database);
 }
 
 int	main(int argc, char *argv[])
