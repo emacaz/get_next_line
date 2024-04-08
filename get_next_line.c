@@ -19,9 +19,37 @@
 #define BUFFER_SIZE 42
 #endif
 
+
+// allocate memory
+// Read the file
+// save the string into index of pointer
+// Save string '\0' -> *[string1][string2][stringn][NULL]
+// free memory
+
 // Returns a read-line from a fd
 char	*get_next_line(int fd)
 {
+	size_t	i;
+	ssize_t	bytes_read;
+	char	*database;
+
+	database = malloc(BUFFER_SIZE);
+	if (!database)
+		return (NULL);
+	while (i < BUFFER_SIZE)
+	{
+		bytes_read = read(fd, &database[i], 1);
+		if (bytes_read == -1)
+			return (NULL);
+		else if (bytes_read == '\n')
+		// Save new word into databse...
+	}
+	
+
+
+
+
+
 	char	*buffer;
 	int		i;
 	ssize_t bytes_read;
