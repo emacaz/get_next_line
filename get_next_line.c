@@ -31,8 +31,13 @@ char	*get_next_line(int fd)
 			free(database);
 			return (NULL);
 		}
-		else if (bytes_read == 0 || database[i] == '\n')
+		else if (bytes_read == 0)
 			break ;
+		if (database[i] == 'm')
+		{
+			i++;
+			break ;
+		}
 		i++;
 	}
 	database[i] = '\0';
@@ -64,3 +69,7 @@ int	main(int argc, char *argv[])
 		close(fd);
 	return (0);
 }
+
+// Receives fd
+// read file with BUFFER_SIZE
+// Divide till find '\n' 1.Return 2.Rest (if there is)
