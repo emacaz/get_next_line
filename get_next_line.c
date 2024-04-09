@@ -17,13 +17,13 @@ char	*get_next_line(int fd)
 {
 	size_t			i;
 	ssize_t			bytes_read;
-	char			*database;
+	static char		*database;
 
 	database = malloc(BUFFER_SIZE);
 	if (!database)
 		return (NULL);
 	i = 0;
-	while (i < BUFFER_SIZE)
+	while (i < BUFFER_SIZE - 1)
 	{
 		bytes_read = read(fd, &database[i], 1);
 		if (bytes_read == -1)
@@ -31,7 +31,7 @@ char	*get_next_line(int fd)
 			free(database);
 			return (NULL);
 		}
-		else if (bytes_read == '\n')
+		else if (bytes_read == 0 || database[i] == '\n')
 			break ;
 		i++;
 	}
