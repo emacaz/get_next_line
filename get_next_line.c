@@ -44,19 +44,23 @@ int	main(int argc, char *argv[])
 	int		fd;
 	char	*next_line;
 
-	if (argc != 2)
+	if (argc == 2)
 	{
-		printf("Error at args in main function");
-		return (0);
+		fd = open(argv[1], O_RDONLY);
+		if (fd == -1)
+			return (printf("Error at opening file"), 1);
 	}
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
+	else if (argc == 1)
+		fd = STDIN_FILENO;
+	else
+		return (printf("Error here"), 1);
+	next_line = get_next_line(fd);
+	if (next_line)
 	{
-		printf("Error opening file");
-		return (0);
+		printf("%s", next_line);
+		free(next_line);
 	}
-	printf("%s", next_line = get_next_line(fd));
-	free(next_line);
-	close(fd);
-	return (1);
+	if (argc == 2)
+		close(fd);
+	return (0);
 }
