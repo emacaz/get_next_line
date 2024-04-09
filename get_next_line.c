@@ -10,21 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE	42
-#endif
+#include "get_next_line.h"
 
 // Returns a read-line from a fd
 char	*get_next_line(int fd)
 {
-	size_t	i;
-	ssize_t	bytes_read;
-	char	*database;
+	size_t			i;
+	ssize_t			bytes_read;
+	char			*database;
 
 	database = malloc(BUFFER_SIZE);
 	if (!database)
@@ -34,7 +27,10 @@ char	*get_next_line(int fd)
 	{
 		bytes_read = read(fd, &database[i], 1);
 		if (bytes_read == -1)
+		{
+			free(database);
 			return (NULL);
+		}
 		else if (bytes_read == '\n')
 			break ;
 		i++;
@@ -46,7 +42,7 @@ char	*get_next_line(int fd)
 int	main(int argc, char *argv[])
 {
 	int		fd;
-	char	*first_line;
+	char	*next_line;
 
 	if (argc != 2)
 	{
@@ -59,8 +55,8 @@ int	main(int argc, char *argv[])
 		printf("Error opening file");
 		return (0);
 	}
-	printf("%s", first_line = get_next_line(fd));
-	free(first_line);
+	printf("%s", next_line = get_next_line(fd));
+	free(next_line);
 	close(fd);
 	return (1);
 }
