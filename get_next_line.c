@@ -20,6 +20,7 @@ char	*get_next_line(int fd)
 	static char		*database;
 
 	database = (char *)malloc(sizeof(char) * BUFFER_SIZE);
+	// I can't allocate BUFER_SIZE. What if is 1?
 	if (!database)
 		return (NULL);
 	i = 0;
