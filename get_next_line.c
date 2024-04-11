@@ -10,11 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line.h" 
+
+// Receives a fd and returns the length of bytes
+size_t	read_file(int fd)
+{
+	
+}
 
 // Returns a read-line from a fd
 char	*get_next_line(int fd)
 {
+	size_t	db_length;
+
+	db_length = read_file(fd);
+
 	size_t			i;
 	ssize_t			bytes_read;
 	static char		*database;
