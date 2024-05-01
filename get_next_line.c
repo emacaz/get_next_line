@@ -84,6 +84,7 @@ void	chain_add_back(t_list **chain, char *line)
 		temp->next = new_node;
 	}
 }
+
 /*
 * Fills a linked list with data from a file descriptor
 * until encountering a newline or end of data.
@@ -126,29 +127,29 @@ char	*get_next_line(int fd)
 }
 
 /* ****************************** */
-int main(int argc, char *argv[])
-{
-    int fd;
-    char *line;
+// int main(int argc, char *argv[])
+// {
+// 	int fd;
+// 	char *line;
 
-    if (argc != 2) {
-        printf("Usage: %s <filename>\n", argv[0]);
-        return 1;
-    }
+// 	if (argc != 2) {
+// 		printf("Usage: %s <filename>\n", argv[0]);
+// 		return 1;
+// 	}
 
-    // Open the file specified by the user
-    fd = open(argv[1], O_RDONLY);
-    if (fd == -1) {
-        perror("Error opening file");
-        return 1;
-    }
-    while ((line = get_next_line(fd)) != NULL) {
-        printf("%s", line);
-        free(line); 
-    }
+// 	// Open the file specified by the user
+// 	fd = open(argv[1], O_RDONLY);
+// 	if (fd == -1) {
+// 		perror("Error opening file");
+// 		return 1;
+// 	}
+// 	while ((line = get_next_line(fd)) != NULL) {
+// 		printf("%s", line);
+// 		free(line); 
+// 	}
 
-    // Close the file descriptor
-    close(fd);
-    return 0;
-}
-/* ****************************** */
+// 	// Close the file descriptor
+// 	close(fd);
+// 	return 0;
+// }
+// /* ****************************** */

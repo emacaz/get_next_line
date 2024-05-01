@@ -59,7 +59,7 @@ int	len_to_newline(t_list *list)
 			++len;
 		}
 		list = list->next;
-	}	
+	}
 	return (len);
 }
 
