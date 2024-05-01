@@ -44,7 +44,7 @@ void	arrange_chain(t_list **chain)
 * Extracts and returns the first line up to
 * a newline character from a linked list of strings.
 */
-char	*get_line(t_list *chain)
+char	*get_the_line(t_list *chain)
 {
 	char	*next_string;
 	int		s_len;
@@ -110,7 +110,7 @@ void	create_chain(t_list **chain, int fd)
 	}
 }
 
-// Receives a fd and returns every \n-ended line
+/* Receives a fd and returns every \n-ended line */
 char	*get_next_line(int fd)
 {
 	static t_list	*chain = NULL;
@@ -121,14 +121,12 @@ char	*get_next_line(int fd)
 	create_chain(&chain, fd);
 	if (chain == NULL)
 		return (NULL);
-	line = get_line(chain);
+	line = get_the_line(chain);
 	arrange_chain(&chain);
 	return (line);
 }
 
-/* ****************************** */
-// int main(int argc, char *argv[])
-// {
+// int main(int argc, char *argv[]) {
 // 	int fd;
 // 	char *line;
 
@@ -136,7 +134,6 @@ char	*get_next_line(int fd)
 // 		printf("Usage: %s <filename>\n", argv[0]);
 // 		return 1;
 // 	}
-
 // 	// Open the file specified by the user
 // 	fd = open(argv[1], O_RDONLY);
 // 	if (fd == -1) {
@@ -147,9 +144,8 @@ char	*get_next_line(int fd)
 // 		printf("%s", line);
 // 		free(line); 
 // 	}
-
 // 	// Close the file descriptor
 // 	close(fd);
+// 	system("leaks a.out");
 // 	return 0;
 // }
-// /* ****************************** */

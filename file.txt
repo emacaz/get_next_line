@@ -1,6 +1,0 @@
-hola
-soy
-Emanuel
-.
-databased
-database

@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-// Check for a \n character
+/* Check for a \n character */
 int	is_newline(t_list *chain)
 {
 	int	i;
@@ -105,6 +105,9 @@ t_list	*find_last_node(t_list *chain)
 	return (chain);
 }
 
+/*
+* Free memory of a chain
+*/
 void	free_chain(t_list **chain, t_list *empty_node, char *buffer)
 {
 	t_list	*temp;
