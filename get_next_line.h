@@ -30,7 +30,7 @@ typedef struct s_list
 
 char	*get_next_line(int fd);
 void	chain_add_back(t_list **chain, char *line);
-void	create_chain(t_list **chain, int fd);
+int		create_chain(t_list **chain, int fd);
 int		is_newline(t_list *chain);
 int		len_to_newline(t_list *list);
 void	copy_string(t_list *list, char *str);

@@ -89,7 +89,7 @@ void	chain_add_back(t_list **chain, char *line)
 * Fills a linked list with data from a file descriptor
 * until encountering a newline or end of data.
 */
-void	create_chain(t_list **chain, int fd)
+int	create_chain(t_list **chain, int fd)
 {
 	char	*buffer;
 	int		bytes_read;
@@ -98,16 +98,22 @@ void	create_chain(t_list **chain, int fd)
 	{
 		buffer = (char *)malloc(BUFFER_SIZE + 1);
 		if (!buffer)
-			return ;
+			return (-1);
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (!bytes_read)
+		if (bytes_read == -1)
 		{
 			free(buffer);
-			return ;
+			return (-1);
+		}
+		if (bytes_read == 0)
+		{
+			free(buffer);
+			return (0);
 		}
 		buffer[bytes_read] = '\0';
 		chain_add_back(chain, buffer);
 	}
+	return (0);
 }
 
 /* Receives a fd and returns every \n-ended line */
@@ -115,9 +121,21 @@ char	*get_next_line(int fd)
 {
 	static t_list	*chain = NULL;
 	char			*line;
+	t_list			*aux;
 
-	if (fd == -1 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
+	if (fd == -1 || BUFFER_SIZE <= 0)
 		return (NULL);
+	if (create_chain(&chain, fd) == -1)
+	{
+		while (chain)
+		{
+			aux = (chain)->next;
+			free((chain)->str_buf);
+			free(chain);
+			chain = aux;
+		}
+		chain = NULL;
+	}
 	create_chain(&chain, fd);
 	if (chain == NULL)
 		return (NULL);

@@ -113,7 +113,7 @@ char	*get_next_line(int fd)
 	static t_list	*chain[1024];
 	char			*line;
 
-	if (fd == -1 || fd > 1023 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
+	if (fd == -1 || fd > 1023 || BUFFER_SIZE <= 0)
 		return (NULL);
 	create_chain(chain, fd);
 	if (chain[fd] == NULL)
