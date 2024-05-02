@@ -29,7 +29,7 @@ typedef struct s_list
 }					t_list;
 
 char	*get_next_line(int fd);
-void	create_chain(t_list **chain, int fd);
+int		create_chain(t_list **chain, int fd);
 char	*get_the_line(t_list *chain);
 void	arrange_chain(t_list **chain);
 t_list	*find_last_node(t_list *chain);

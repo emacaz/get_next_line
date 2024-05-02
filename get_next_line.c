@@ -136,7 +136,6 @@ char	*get_next_line(int fd)
 		}
 		chain = NULL;
 	}
-	create_chain(&chain, fd);
 	if (chain == NULL)
 		return (NULL);
 	line = get_the_line(chain);

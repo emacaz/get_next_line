@@ -83,7 +83,7 @@ char	*get_the_line(t_list *chain)
 * Fills a linked list with data from a file descriptor
 * until encountering a newline or end of data.
 */
-void	create_chain(t_list **chain, int fd)
+int	create_chain(t_list **chain, int fd)
 {
 	char	*buffer;
 	int		bytes_read;
@@ -92,16 +92,22 @@ void	create_chain(t_list **chain, int fd)
 	{
 		buffer = (char *)malloc(BUFFER_SIZE + 1);
 		if (buffer == NULL)
-			return ;
+			return (-1);
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (!bytes_read)
+		if (bytes_read == -1)
 		{
 			free(buffer);
-			return ;
+			return (-1);
+		}
+		if (bytes_read == 0)
+		{
+			free(buffer);
+			return (0);
 		}
 		buffer[bytes_read] = '\0';
 		chain_add_back(chain, buffer, fd);
 	}
+	return (0);
 }
 
 /*
@@ -112,10 +118,21 @@ char	*get_next_line(int fd)
 {
 	static t_list	*chain[1024];
 	char			*line;
+	t_list			*aux;
 
 	if (fd == -1 || fd > 1023 || BUFFER_SIZE <= 0)
 		return (NULL);
-	create_chain(chain, fd);
+	if (create_chain(chain, fd) == -1)
+	{
+		while (chain[fd])
+		{
+			aux = (chain[fd])->next;
+			free((chain[fd])->str_buf);
+			free(chain[fd]);
+			chain[fd] = aux;
+		}
+		chain[fd] = NULL;
+	}
 	if (chain[fd] == NULL)
 		return (NULL);
 	line = get_the_line(chain[fd]);
@@ -123,45 +140,32 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-// int	main(void) {
-// 	int		fds[3];
-// 	int		j;
-// 	int		active_fds;
-// 	char	*line;
-
-// 	fds[0] = open("file1.txt", O_RDONLY);
-// 	fds[1] = open("file2.txt", O_RDONLY);
-// 	fds[2] = open("file3.txt", O_RDONLY);
-// 	// Check if files open
-// 	j = 0;
-// 	while (j < 3) {
-// 		if (fds[j] == -1) {
-// 			printf("Failed to open...");
-// 			return (1);
-// 		}
-// 		j++;
+// int main(void)
+// {
+// 	char *file = "file1.txt";
+// 	int fd = open(file, O_RDONLY);
+// 	if (fd == -1)
+// 		return (0);
+// 	int i = 9;
+// 	while (i--)
+// 	{
+// 		char *result = get_next_line(fd);
+// 		printf("Linea %d: %s", i, result);
+// 		free(result);
 // 	}
-// 	// Read and print one line from each file in a round
-// 	active_fds = 3;
-// 	while (active_fds > 0) {
-// 		j = 0;
-// 		while (j < 3) {
-// 			if (fds[j] != -1) {
-// 				line = get_next_line(fds[j]);
-// 				if (line == NULL) {
-// 					close(fds[j]);
-// 					fds[j] = -1;
-// 					active_fds--;
-// 				}
-// 				else {
-// 					printf("Files %d: %s\n", j + 1, line);
-// 					free(line);
-// 				}
-// 			}
-// 			j++;
-// 		}
+// 	close(fd);
+// 	char *file2 = "file2.txt";
+// 	int fd2 = open(file2, O_RDONLY);
+// 	if (fd2 == -1)
+// 		return (0);
+// 	int j = 4;
+// 	while (j--)
+// 	{
+// 		char *result2 = get_next_line(fd);
+// 		printf("Linea %d: %s", j, result2);
+// 		free(result2);
 // 	}
-// 	system("leaks a.out");
-// 	getchar();
+// 	close(fd2);
+// 	system("leaks -q a.out");
 // 	return (0);
 // }
