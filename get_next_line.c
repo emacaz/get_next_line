@@ -143,26 +143,27 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-// int main(int argc, char *argv[]) {
-// 	int fd;
-// 	char *line;
+/*int main(int argc, char *argv[]) {
+	int fd;
+	char *line;
 
-// 	if (argc != 2) {
-// 		printf("Usage: %s <filename>\n", argv[0]);
-// 		return 1;
-// 	}
-// 	// Open the file specified by the user
-// 	fd = open(argv[1], O_RDONLY);
-// 	if (fd == -1) {
-// 		perror("Error opening file");
-// 		return 1;
-// 	}
-// 	while ((line = get_next_line(fd)) != NULL) {
-// 		printf("%s", line);
-// 		free(line); 
-// 	}
-// 	// Close the file descriptor
-// 	close(fd);
-// 	system("leaks a.out");
-// 	return 0;
-// }
+	if (argc != 2) {
+		printf("Usage: %s <filename>\n", argv[0]);
+		return 1;
+	}
+	// Open the file specified by the user
+	fd = open(argv[1], O_RDONLY);
+	if (fd == -1) {
+		perror("Error opening file");
+		return 1;
+	}
+	while ((line = get_next_line(fd)) != NULL) {
+		printf("%s", line);
+		free(line); 
+	}
+	// Close the file descriptor
+	close(fd);
+	system("leaks a.out");
+	return 0;
+}
+*/

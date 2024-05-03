@@ -140,32 +140,32 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-// int main(void)
-// {
-// 	char *file = "file1.txt";
-// 	int fd = open(file, O_RDONLY);
-// 	if (fd == -1)
-// 		return (0);
-// 	int i = 9;
-// 	while (i--)
-// 	{
-// 		char *result = get_next_line(fd);
-// 		printf("Linea %d: %s", i, result);
-// 		free(result);
-// 	}
-// 	close(fd);
-// 	char *file2 = "file2.txt";
-// 	int fd2 = open(file2, O_RDONLY);
-// 	if (fd2 == -1)
-// 		return (0);
-// 	int j = 4;
-// 	while (j--)
-// 	{
-// 		char *result2 = get_next_line(fd);
-// 		printf("Linea %d: %s", j, result2);
-// 		free(result2);
-// 	}
-// 	close(fd2);
-// 	system("leaks -q a.out");
-// 	return (0);
-// }
+/*int main(void)
+{
+	char *file = "file1.txt";
+	int fd = open(file, O_RDONLY);
+	if (fd == -1)
+		return (0);
+	int i = 9;
+	while (i--)
+	{
+		char *result = get_next_line(fd);
+		printf("Linea %d: %s", i, result);
+		free(result);
+	}
+	close(fd);
+	char *file2 = "file2.txt";
+	int fd2 = open(file2, O_RDONLY);
+	if (fd2 == -1)
+		return (0);
+	int j = 4;
+	while (j--)
+	{
+		char *result2 = get_next_line(fd);
+		printf("Linea %d: %s", j, result2);
+		free(result2);
+	}
+	close(fd2);
+	system("leaks -q a.out");
+	return (0);
+}*/
